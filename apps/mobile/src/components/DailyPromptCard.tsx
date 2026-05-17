@@ -59,7 +59,7 @@ export default function DailyPromptCard({ groupId, userId, groupLabel }: Props) 
     if (!card || !groupContext) return;
     await Haptics.impactAsync(response === 'yes' ? Haptics.ImpactFeedbackStyle.Heavy : Haptics.ImpactFeedbackStyle.Light);
     scale.value = withSpring(0.95, {}, () => { scale.value = withSpring(1); });
-    const updatedResponses = { ...(card.responses as Record<string, string>), [userId]: response };
+    const updatedResponses: Record<string, 'yes' | 'maybe' | 'no' | 'skip' | 'done'> = { ...(card.responses as Record<string, 'yes' | 'maybe' | 'no' | 'skip' | 'done'>), [userId]: response };
     const allResponded = groupContext.members.every((m) => updatedResponses[m.id] != null);
     const isMatch = allResponded && Object.values(updatedResponses).every((r) => r === 'yes');
     await supabase.from('session_cards').update({

@@ -24,12 +24,13 @@ export default function InviteScreen() {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
     const { data: group } = await supabase.from('groups').insert({
       created_by: user.id, max_members: maxMembers, invite_code: code,
-      invite_expires_at: expiresAt, status: 'pending',
+      invite_expires_at: expiresAt, status: 'pending', name: null, dissolved_at: null,
     }).select().single();
     if (!group) { setLoading(false); return; }
+    const now = new Date().toISOString();
     await Promise.all([
-      supabase.from('group_members').insert({ group_id: group.id, user_id: user.id, role: 'creator' }),
-      supabase.from('group_settings').insert({ group_id: group.id, max_tier: 'mild', blocked_categories: [], explicit_consent: {} }),
+      supabase.from('group_members').insert({ group_id: group.id, user_id: user.id, role: 'creator', joined_at: now }),
+      supabase.from('group_settings').insert({ group_id: group.id, max_tier: 'mild', blocked_categories: [], explicit_consent: {}, theme: null, paused_until: null }),
       supabase.from('streaks').insert({ group_id: group.id, current_count: 0, longest: 0, last_active_date: new Date().toISOString().split('T')[0], last_saved_by: user.id }),
     ]);
     // ROADMAP-B: joinCommunityRoom stub — create Matrix private room when feature ships
@@ -43,13 +44,14 @@ export default function InviteScreen() {
     const { data: { session } } = await supabase.auth.getSession();
     const response = await fetch(`${process.env.EXPO_PUBLIC_SUPABASE_URL}/functions/v1/group-invite-redeem`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session?.access_token}` },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session?.access_token ?? ''}` },
       body: JSON.stringify({ invite_code: joinCode.toUpperCase() }),
     });
     const data = await response.json();
     if (data.group_id) {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      await supabase.from('profiles').update({ onboarding_complete: true }).eq('id', (await supabase.auth.getUser()).data.user?.id);
+      const { data: { user: joinedUser } } = await supabase.auth.getUser();
+      if (joinedUser) await supabase.from('profiles').update({ onboarding_complete: true }).eq('id', joinedUser.id);
       router.replace('/(app)/dashboard');
     } else {
       Alert.alert('Error', data.error ?? 'Could not join group');
