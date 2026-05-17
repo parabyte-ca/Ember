@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "Ember",
+    "slug": "ember",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "ember",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1B1233"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "ca.parabyte.ember",
+      "associatedDomains": ["applinks:ember.app"],
+      "infoPlist": {
+        "NSCameraUsageDescription": "Used for profile photos",
+        "NSPhotoLibraryUsageDescription": "Used for profile photos"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1B1233"
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [{ "scheme": "https", "host": "ember.app", "pathPrefix": "/join" }],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
+      "package": "ca.parabyte.ember"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-haptics",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#E85A6B"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

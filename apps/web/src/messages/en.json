@@ -1,0 +1,76 @@
+{
+  "app": {
+    "name": "Ember",
+    "tagline": "Deepen your connection, one question at a time."
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "signUp": "Get started",
+    "email": "Email address",
+    "magicLink": "Send magic link",
+    "checkEmail": "Check your email for a sign-in link.",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple"
+  },
+  "onboarding": {
+    "ageGate": {
+      "title": "First, let's confirm your age",
+      "body": "Ember contains mature content. You must be 18 or older to continue.",
+      "dobLabel": "Date of birth",
+      "continue": "Continue",
+      "underageMessage": "You must be 18 or older to use Ember."
+    },
+    "identity": {
+      "displayNameTitle": "What should we call you?",
+      "pronounsTitle": "Your pronouns",
+      "genderTitle": "Your gender",
+      "orientationTitle": "Your orientation",
+      "structureTitle": "Your relationship style",
+      "lifestyleTitle": "Lifestyle interests",
+      "revealTitle": "Your personalised experience",
+      "inviteTitle": "Invite your partner(s)"
+    },
+    "paywall": {
+      "title": "Unlock the full Ember experience",
+      "trialCta": "Start 7-day free trial",
+      "skipForNow": "Maybe later"
+    }
+  },
+  "dashboard": {
+    "todaysPrompt": "Today's question",
+    "yourStreak": "Your streak",
+    "days": "days",
+    "viewAll": "View all"
+  },
+  "group": {
+    "create": "Create your group",
+    "inviteCode": "Invite code",
+    "shareCode": "Share code",
+    "waitingFor": "Waiting for {n} more…",
+    "joinGroup": "Join a group",
+    "enterCode": "Enter invite code",
+    "qrCode": "QR Code",
+    "dissolved": "This group has been dissolved."
+  },
+  "safety": {
+    "title": "Safety & Support",
+    "body": "Your wellbeing comes first. If you need support, these resources are here for you.",
+    "consentCheckIn": "Consent check-in",
+    "pauseSession": "Pause group activity",
+    "pauseConfirm": "Your group's activity is paused for 24 hours. You don't need to explain why.",
+    "resources": {
+      "rainn": "RAINN — 1-800-656-HOPE",
+      "loveisrespect": "loveisrespect — 1-866-331-9474",
+      "crisis": "Crisis Text Line — Text HOME to 741741"
+    }
+  },
+  "subscription": {
+    "free": "Free",
+    "plus": "Plus",
+    "household": "Household",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "trialDays": "7-day free trial"
+  }
+}

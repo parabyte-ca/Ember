@@ -1,0 +1,13 @@
+export const APP_NAME = 'Ember' as const;
+export const APP_URL_SCHEME = 'ember' as const;
+export const INVITE_CODE_LENGTH = 6;
+export const INVITE_CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no O, 0, I, 1
+export const INVITE_EXPIRY_DAYS = 7;
+export const MAX_GROUP_SIZE = 6;
+export const MIN_GROUP_SIZE = 2;
+export const STREAM_COOLDOWN_DAYS = 60;
+export const PUSH_DAILY_CAP = 2;
+export const QUIET_HOURS_START = 22; // 10pm
+export const QUIET_HOURS_END = 8; // 8am
+export const DAILY_PROMPT_HOUR = 9; // 9am group-local-time
+export const NUDGE_DELAY_HOURS = 4;

@@ -1,0 +1,13 @@
+{
+  "extends": "@ember/config/typescript/nextjs",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ember/lib": ["../../packages/lib/index.ts"],
+      "@ember/db": ["../../packages/db/index.ts"],
+      "@ember/ui": ["../../packages/ui/index.ts"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

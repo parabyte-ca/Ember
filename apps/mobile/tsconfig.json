@@ -1,0 +1,13 @@
+{
+  "extends": "@ember/config/typescript/react-native",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ember/lib": ["../../packages/lib/index.ts"],
+      "@ember/db": ["../../packages/db/index.ts"],
+      "@ember/ui": ["../../packages/ui/index.ts"]
+    }
+  },
+  "include": ["./**/*.ts", "./**/*.tsx"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@ember/config",
+  "version": "0.1.0",
+  "private": true,
+  "files": ["eslint.js", "tailwind.js", "typescript"],
+  "exports": {
+    "./eslint": "./eslint.js",
+    "./tailwind": "./tailwind.js",
+    "./typescript/base": "./typescript/base.json",
+    "./typescript/nextjs": "./typescript/nextjs.json",
+    "./typescript/react-native": "./typescript/react-native.json"
+  }
+}
