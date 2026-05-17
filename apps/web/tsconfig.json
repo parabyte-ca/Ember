@@ -1,13 +1,30 @@
 {
-  "extends": "@ember/config/typescript/nextjs",
+  "extends": "../../packages/config/typescript/nextjs.json",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      "@ember/lib": ["../../packages/lib/index.ts"],
-      "@ember/db": ["../../packages/db/index.ts"],
-      "@ember/ui": ["../../packages/ui/index.ts"]
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "@ember/lib": [
+        "../../packages/lib/index.ts"
+      ],
+      "@ember/db": [
+        "../../packages/db/index.ts"
+      ],
+      "@ember/ui": [
+        "../../packages/ui/index.ts"
+      ]
+    },
+    "allowJs": true,
+    "noEmit": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

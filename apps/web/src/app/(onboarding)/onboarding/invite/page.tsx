@@ -25,11 +25,12 @@ export default function InvitePage() {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
     const { data: group } = await supabase.from('groups').insert({
       created_by: user.id, max_members: maxMembers, invite_code: code,
-      invite_expires_at: expiresAt, status: 'pending',
+      invite_expires_at: expiresAt, status: 'pending', name: null, dissolved_at: null,
     }).select().single();
     if (!group) { setLoading(false); return; }
-    await supabase.from('group_members').insert({ group_id: group.id, user_id: user.id, role: 'creator' });
-    await supabase.from('group_settings').insert({ group_id: group.id, max_tier: 'mild', blocked_categories: [], explicit_consent: {} });
+    const now = new Date().toISOString();
+    await supabase.from('group_members').insert({ group_id: group.id, user_id: user.id, role: 'creator', joined_at: now });
+    await supabase.from('group_settings').insert({ group_id: group.id, max_tier: 'mild', blocked_categories: [], explicit_consent: {}, theme: null, paused_until: null });
     await supabase.from('streaks').insert({ group_id: group.id, current_count: 0, longest: 0, last_active_date: new Date().toISOString().split('T')[0], last_saved_by: user.id });
     // ROADMAP-B: joinCommunityRoom stub — create Matrix private room when feature ships
     setInviteCode(code);

@@ -73,7 +73,8 @@ CREATE TABLE IF NOT EXISTS group_settings (
   max_tier content_tier_enum NOT NULL DEFAULT 'mild',
   blocked_categories TEXT[] NOT NULL DEFAULT '{}',
   explicit_consent JSONB NOT NULL DEFAULT '{}',
-  theme JSONB
+  theme JSONB,
+  paused_until TIMESTAMPTZ
   -- ROADMAP-B: community_room_id TEXT -- Matrix room ID when community feature ships
   -- ROADMAP-D: toy_sync_enabled BOOLEAN DEFAULT FALSE
 );

@@ -1,5 +1,5 @@
 {
-  "extends": "@ember/config/typescript/react-native",
+  "extends": "../../packages/config/typescript/react-native.json",
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],

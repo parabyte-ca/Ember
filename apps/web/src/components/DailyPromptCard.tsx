@@ -96,7 +96,7 @@ export default function DailyPromptCard({ groupId, userId }: Props) {
   const handleResponse = async (response: 'yes' | 'maybe' | 'no' | 'skip') => {
     if (!card) return;
     setResponding(true);
-    const updatedResponses = { ...(card.responses as Record<string, string>), [userId]: response };
+    const updatedResponses: Record<string, 'yes' | 'maybe' | 'no' | 'skip' | 'done'> = { ...card.responses, [userId]: response };
     const allResponded = groupContext?.members.every((m) => updatedResponses[m.id] !== undefined && updatedResponses[m.id] !== null);
     const isMatch = allResponded && Object.values(updatedResponses).every((r) => r === 'yes');
     await supabase.from('session_cards').update({

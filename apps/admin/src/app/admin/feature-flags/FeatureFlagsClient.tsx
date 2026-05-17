@@ -8,8 +8,8 @@ export default function FeatureFlagsClient({ initialFlags }: { initialFlags: Fea
   const supabase = createClient();
 
   const handleToggle = async (key: string, currentValue: unknown) => {
-    const newValue = !currentValue;
-    await supabase.from('feature_flags').update({ value: newValue }).eq('key', key);
+    const newValue: boolean = !currentValue;
+    await supabase.from('feature_flags').update({ value: newValue as import('@ember/db').Json }).eq('key', key);
     setFlags((prev) => prev.map((f) => f.key === key ? { ...f, value: newValue } : f));
   };
 

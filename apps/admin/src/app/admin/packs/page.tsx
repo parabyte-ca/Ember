@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 
 export default async function PacksPage() {
   const supabase = await createClient();
-  const { data: packs } = await supabase.from('prompt_packs').select('*, prompt_pack_items(count)').order('sort_order');
+  const { data: packs } = await supabase.from('prompt_packs').select('*').order('sort_order');
 
   return (
     <div className="space-y-6">

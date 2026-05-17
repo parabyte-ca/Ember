@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import '@fontsource/inter/variable.css';
-import '@fontsource/fraunces/variable.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/fraunces/400.css';
+import '@fontsource/fraunces/600.css';
 import '../globals.css';
 import { APP_NAME } from '@ember/lib';
 import { NextIntlClientProvider } from 'next-intl';

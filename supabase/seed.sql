@@ -496,3 +496,238 @@ INSERT INTO prompts (id, category_id, tier, body, min_group_size, max_group_size
   (gen_random_uuid(), '11111111-0000-0000-0000-000000000006', 'explicit', 'Describe an experience with {name1} that has no script, no plan, and no escape hatch.', 2, 6, '{}', true),
   (gen_random_uuid(), '11111111-0000-0000-0000-000000000006', 'explicit', 'What is the most alive you have ever felt with {name2}, and how do you get back there?', 2, 6, '{}', true);
 
+
+
+-- ---------------------------------------------------------------------------
+-- Prompts -- Lifestyle (mild x 20) -- ENM/swinger targeted
+-- REPLACE BEFORE LAUNCH -- content team will populate via CMS
+-- ---------------------------------------------------------------------------
+
+INSERT INTO prompts (id, category_id, tier, body, min_group_size, max_group_size, relationship_structures, published) VALUES
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What drew {name1} to an open relationship model, and has that reason evolved?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'How do you and {name2} decide together when to explore connections outside your partnership?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What is one check-in ritual you and {name1} rely on to stay connected after outside experiences?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'Tell {name2} one thing about your lifestyle that you are proud of, that most people would not understand.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What value does openness or non-monogamy bring to your relationship with {name1}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'How has navigating the lifestyle made {name2} more skilled at communicating with you?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What is one agreement with {name1} that you both arrived at through experience rather than theory?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What would you want a friend to understand about your relationship with {name2} before judging it?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What does compersion feel like for you when {name1} experiences joy with someone else?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'How do you and {name2} protect your primary bond while staying open to other connections?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What is a misconception about the lifestyle that {name1} had before experiencing it?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What community or event has meant the most to you and {name2} in your lifestyle journey?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'Tell {name1} one thing about {possessive2} approach to non-monogamy that you genuinely admire.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What is a book, podcast, or resource that shaped how you both think about your relationship model?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'How do you want {name2} to handle it if {subject2} ever feels unsure about an outside connection?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What is one thing {name1} does in the lifestyle that makes you feel especially proud of {subject1}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'How has living openly changed what you appreciate most about your bond with {name2}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What does your dream social circle in the lifestyle look like for you and {name1}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'Tell {name2} about a moment when you knew your ENM structure was right for you both.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'mild', 'What is one upgrade you would make to your current relationship agreements with {name1}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true);
+
+-- Lifestyle -- spicy x 20
+-- REPLACE BEFORE LAUNCH -- content team will populate via CMS
+
+INSERT INTO prompts (id, category_id, tier, body, min_group_size, max_group_size, relationship_structures, published) VALUES
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Tell {name1} about a jealousy moment you had and what you discovered about yourself from it.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is an outside experience that unexpectedly brought you and {name2} closer?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Describe a moment at a lifestyle event where you felt most proud of yourself and {name1}.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is one boundary {name2} currently holds that {subject2} might be ready to renegotiate?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Tell {name1} about a connection outside your partnership that taught you something about yourself.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is the most emotionally complex part of living openly that you and {name2} have navigated?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Describe a type of outside connection that {name1} finds most fulfilling and why.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is something {name2} does in the lifestyle that you find deeply attractive?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Tell {name1} what you felt watching {subject1} connect with someone else for the first time.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What aspect of your lifestyle would you most want to explore more deeply with {name2}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'How do you and {name1} handle it when an outside connection develops deeper feelings?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is the bravest thing you have done in your lifestyle journey with {name2}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Tell {name2} about a desire in the lifestyle you have been hesitant to voice.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is a type of event or experience you want to have with {name1} that you have not yet tried?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Describe the most profound conversation you and {name2} have had because of your lifestyle.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is something about {possessive1} relationship with jealousy that has shifted since opening up?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'Tell {name1} about a moment where compersion surprised you with its intensity.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is your honest answer to: how are our agreements serving us right now?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'What is a new agreement with {name2} you want to propose based on what you have learned?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'spicy', 'How has living openly changed what intimacy means to you with {name1}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true);
+
+-- Lifestyle -- explicit x 20
+-- REPLACE BEFORE LAUNCH -- content team will populate via CMS
+
+INSERT INTO prompts (id, category_id, tier, body, min_group_size, max_group_size, relationship_structures, published) VALUES
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Describe a specific shared experience in the lifestyle that you and {name2} still talk about.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Tell {name1} what you most want from your next lifestyle experience together.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What type of connection or dynamic have you wanted to explore with {name2} but have not yet proposed?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Describe the ideal lifestyle experience with {name1} from first flirtation to returning home.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What is something you have seen others do in the lifestyle that you want to explore with {name2}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Tell {name1} about an outside experience that made you feel most connected to {subject1} afterward.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What is a fantasy involving {name2} and the lifestyle that you have been building in your imagination?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Describe in detail what aftercare looks like between you and {name1} after an intense shared experience.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What specific desire have you never fully articulated to {name2} about your shared lifestyle exploration?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Tell {name1} exactly what {subject2} finds most attractive about watching them in a lifestyle context.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What is the most charged lifestyle scenario you have imagined that you would need {name2} full consent to explore?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Describe a night with {name1} and another connection that would leave everyone feeling seen and respected.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What is something {name2} does in intimate contexts that you have never stopped finding exciting?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Tell {name1} what makes {subject1} exceptional as a partner in the lifestyle compared to anyone you have encountered.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Describe a three-stage lifestyle date with {name2} -- before, during, and the reconnection at the end.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What is the most vulnerable {name1} has ever been with you in a lifestyle context, and what did that mean to you?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What is a dynamic -- voyeuristic, participatory, dominant, or receiving -- that excites you most with {name2}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Tell {name2} about a desire you have that requires open, honest negotiation before you could try it.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'What does the ideal version of your shared lifestyle exploration look like five years from now with {name1}?', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000007', 'explicit', 'Tell {name1} the single most honest thing you could say about what living openly has done for your desire for {subject1}.', 2, 6, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring'], true);
+
+-- ---------------------------------------------------------------------------
+-- Prompts -- Group Dynamics (mild x 20) -- 3+ members
+-- REPLACE BEFORE LAUNCH -- content team will populate via CMS
+-- ---------------------------------------------------------------------------
+
+INSERT INTO prompts (id, category_id, tier, body, min_group_size, max_group_size, relationship_structures, published) VALUES
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Go around the group: each person names one quality they love about the person to their left.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What is one thing all of you share that you have never actually named out loud?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Name one thing each person in this group does that makes the whole group stronger.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What is the unwritten rule of your group that everyone follows but no one has stated?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Have each person share a memory of a moment this group made them laugh until it hurt.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What is one thing the group could do more of together that everyone would enjoy?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Go around: each person names the superpower the person to their right brings to the group.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What is something the group has built together that none of you could have built alone?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Describe the moment each person joined this constellation and how the dynamic shifted.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What is a shared ritual the group wants to start?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Each person: name one thing you appreciate about the group communication style.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What does this group do best when everyone is at their best?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Go around: share one thing you were nervous about when you first joined this group.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What adventure could this group only have together -- not in pairs?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Name a memory with the whole group that you would want to relive.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What would a documentary about this group be called and what would its thesis be?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'Have each person finish this sentence: this group is at its best when...', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What is one way each person shows love that is uniquely theirs?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'What three words would each person use to describe the energy of this group?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'mild', 'If this group had a theme song, what would it be and why does everyone agree?', 3, 6, '{}', true);
+
+-- Group Dynamics -- spicy x 20
+-- REPLACE BEFORE LAUNCH -- content team will populate via CMS
+
+INSERT INTO prompts (id, category_id, tier, body, min_group_size, max_group_size, relationship_structures, published) VALUES
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Is there a dynamic in the group that everyone feels but no one has named? Name it now.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Tell the group about a moment you felt left out and did not say anything.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What is a tension in the group that you think needs to be aired?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Go around: each person says one honest thing they have never told the full group.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What is a need you have within this group that you have been meeting only halfway?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What is the hardest conversation this group has ever had, and did it bring you closer?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Is there a role you play in this group that you would like to step out of?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Each person: share a moment you felt jealous of a dynamic within the group.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What agreement does this group still need to make explicit?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Describe a time when the group needs pulled in different directions. How did you navigate it?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What is something a smaller pair within the group has that the full group sometimes misses?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Tell the group one thing you have been too careful to say. Say it now, gently.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'How does each person feel about how time and attention are distributed in the group?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What is a fear each person carries about the group future?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Which relationship pairing within the group do you feel needs the most dedicated time right now?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What is something you wish was different about how the group makes decisions?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Each person: what is your unmet need from the group this week?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'Describe a moment in the group when you felt a connection you had not expected.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What would change in this group if everyone said exactly what they needed every day?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'spicy', 'What is one way the group could better support each individual growth?', 3, 6, '{}', true);
+
+-- Group Dynamics -- explicit x 20
+-- REPLACE BEFORE LAUNCH -- content team will populate via CMS
+
+INSERT INTO prompts (id, category_id, tier, body, min_group_size, max_group_size, relationship_structures, published) VALUES
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Describe the most intimate moment the whole group has shared that changed something.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What does each person need to feel fully seen and desired within this group?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Tell the group about a desire you have involving the whole constellation that you have not voiced.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What is something each person does that the group finds irresistible?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Describe an experience the whole group could share that would deepen everyone bond.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What is a fantasy about the group dynamic that you have been afraid to share?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Go around: each person tells the group what makes them feel most desired.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What is the most vulnerable thing each person in the group can say about their place in it?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Describe an ideal night for the whole group where everyone leaves feeling completely satisfied.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What does each person need to feel emotionally safe enough to be completely unguarded?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Tell the group one thing you love about each person energy in intimate moments.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What is something the group has never tried together that everyone is secretly curious about?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Describe a moment of group intimacy where you felt everyone connection simultaneously.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What is one desire each person has that they could only fulfill with this specific group?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Tell the group what aftercare looks like for you and what the group can offer.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What is the most honest thing each person can say about what they want from this group right now?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Describe a scenario where every person in the group feels equally central.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What is a boundary each person holds that the group needs to honor explicitly?', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'Tell the group about a desire that has grown stronger since joining this constellation.', 3, 6, '{}', true),
+  (gen_random_uuid(), '11111111-0000-0000-0000-000000000008', 'explicit', 'What would each person want the others to know about how they experience desire within this group?', 3, 6, '{}', true);
+
+
+-- ---------------------------------------------------------------------------
+-- Prompt Packs
+-- ---------------------------------------------------------------------------
+
+INSERT INTO prompt_packs (id, slug, name, description, is_premium, sku, sort_order, active, relationship_structures) VALUES
+  ('22222222-0000-0000-0000-000000000001', 'starter-free',    'Starter',        'Your first 30 questions -- a warm welcome to Ember',                      false, NULL,                      1, true, NULL),
+  ('22222222-0000-0000-0000-000000000002', 'newlywed',        'Newlywed',       'Deepen your bond in the first years of commitment',                        true,  'ember_pack_newlywed',     2, true, NULL),
+  ('22222222-0000-0000-0000-000000000003', 'long-distance',   'Long Distance',  'Stay close when you are miles apart',                                      true,  'ember_pack_longdistance', 3, true, NULL),
+  ('22222222-0000-0000-0000-000000000004', 'reconnect',       'Reconnect',      'Rediscover each other after a busy season',                                false, NULL,                      4, true, NULL),
+  ('22222222-0000-0000-0000-000000000005', 'lifestyle-intro', 'Lifestyle Intro','A thoughtful starting point for ENM and open relationship exploration',    true,  'ember_pack_lifestyle',    5, true, ARRAY['open','swinger','polyamorous','ENM','thruple','quad','constellation','exploring']);
+
+-- ---------------------------------------------------------------------------
+-- Pack items: seed each pack with relevant prompts
+-- ---------------------------------------------------------------------------
+
+-- Starter (free): Connection mild + Curiosity mild, up to 30
+INSERT INTO prompt_pack_items (pack_id, prompt_id, sort_order)
+SELECT
+  '22222222-0000-0000-0000-000000000001',
+  p.id,
+  (ROW_NUMBER() OVER (ORDER BY p.created_at) - 1)
+FROM prompts p
+JOIN categories c ON c.id = p.category_id
+WHERE c.slug IN ('connection', 'curiosity')
+  AND p.tier = 'mild'
+  AND p.published = true
+LIMIT 30;
+
+-- Reconnect (free): Connection + Touch + Fantasy spicy, up to 30
+INSERT INTO prompt_pack_items (pack_id, prompt_id, sort_order)
+SELECT
+  '22222222-0000-0000-0000-000000000004',
+  p.id,
+  (ROW_NUMBER() OVER (ORDER BY p.created_at) - 1)
+FROM prompts p
+JOIN categories c ON c.id = p.category_id
+WHERE c.slug IN ('connection', 'touch', 'fantasy')
+  AND p.tier = 'spicy'
+  AND p.published = true
+LIMIT 30;
+
+-- Newlywed (premium): Connection + Touch + Curiosity mild+spicy, up to 40
+INSERT INTO prompt_pack_items (pack_id, prompt_id, sort_order)
+SELECT
+  '22222222-0000-0000-0000-000000000002',
+  p.id,
+  (ROW_NUMBER() OVER (ORDER BY p.created_at) - 1)
+FROM prompts p
+JOIN categories c ON c.id = p.category_id
+WHERE c.slug IN ('connection', 'touch', 'curiosity')
+  AND p.tier IN ('mild', 'spicy')
+  AND p.published = true
+LIMIT 40;
+
+-- Long Distance (premium): Connection + Playful + Fantasy + Curiosity mild+spicy, up to 40
+INSERT INTO prompt_pack_items (pack_id, prompt_id, sort_order)
+SELECT
+  '22222222-0000-0000-0000-000000000003',
+  p.id,
+  (ROW_NUMBER() OVER (ORDER BY p.created_at) - 1)
+FROM prompts p
+JOIN categories c ON c.id = p.category_id
+WHERE c.slug IN ('connection', 'playful', 'fantasy', 'curiosity')
+  AND p.tier IN ('mild', 'spicy')
+  AND p.published = true
+LIMIT 40;
+
+-- Lifestyle Intro (premium): all Lifestyle mild+spicy
+INSERT INTO prompt_pack_items (pack_id, prompt_id, sort_order)
+SELECT
+  '22222222-0000-0000-0000-000000000005',
+  p.id,
+  (ROW_NUMBER() OVER (ORDER BY p.created_at) - 1)
+FROM prompts p
+JOIN categories c ON c.id = p.category_id
+WHERE c.slug = 'lifestyle'
+  AND p.tier IN ('mild', 'spicy')
+  AND p.published = true;

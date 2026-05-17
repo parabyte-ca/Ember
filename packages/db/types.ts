@@ -24,7 +24,7 @@ export type SubscriptionTier = 'free' | 'plus' | 'household';
 export type ToyProvider = 'lovense' | 'buttplug_generic'; // ROADMAP-D
 export type CommunityRoomKind = 'group_private' | 'lifestyle_community' | 'event'; // ROADMAP-B
 
-export interface Profile {
+export type Profile = {
   id: string;
   display_name: string;
   avatar_url: string | null;
@@ -41,7 +41,7 @@ export interface Profile {
   created_at: string;
 }
 
-export interface Group {
+export type Group = {
   id: string;
   created_by: string;
   name: string | null;
@@ -53,24 +53,25 @@ export interface Group {
   dissolved_at: string | null;
 }
 
-export interface GroupMember {
+export type GroupMember = {
   group_id: string;
   user_id: string;
   role: GroupMemberRole;
   joined_at: string;
 }
 
-export interface GroupSettings {
+export type GroupSettings = {
   group_id: string;
   max_tier: ContentTier;
   blocked_categories: string[];
   explicit_consent: Record<string, boolean>;
   theme: Json | null;
+  paused_until: string | null;
   // ROADMAP-B: community_room_id: string | null;
   // ROADMAP-D: toy_sync_enabled: boolean;
 }
 
-export interface Category {
+export type Category = {
   id: string;
   slug: string;
   name: string;
@@ -81,7 +82,7 @@ export interface Category {
   relationship_structures: string[] | null;
 }
 
-export interface Prompt {
+export type Prompt = {
   id: string;
   category_id: string;
   tier: ContentTier;
@@ -100,7 +101,7 @@ export interface Prompt {
   author_id: string | null;
 }
 
-export interface PromptPack {
+export type PromptPack = {
   id: string;
   slug: string;
   name: string;
@@ -113,13 +114,13 @@ export interface PromptPack {
   relationship_structures: string[] | null;
 }
 
-export interface PromptPackItem {
+export type PromptPackItem = {
   pack_id: string;
   prompt_id: string;
   sort_order: number;
 }
 
-export interface Session {
+export type Session = {
   id: string;
   group_id: string;
   started_at: string;
@@ -129,7 +130,7 @@ export interface Session {
   // ROADMAP-D: toy_session_id: string | null;
 }
 
-export interface SessionCard {
+export type SessionCard = {
   id: string;
   session_id: string;
   prompt_id: string;
@@ -140,7 +141,7 @@ export interface SessionCard {
   // ROADMAP-D: toy_pattern: Json | null;
 }
 
-export interface Streak {
+export type Streak = {
   group_id: string;
   current_count: number;
   longest: number;
@@ -148,7 +149,7 @@ export interface Streak {
   last_saved_by: string;
 }
 
-export interface Nudge {
+export type Nudge = {
   id: string;
   group_id: string;
   from_user_id: string;
@@ -159,7 +160,7 @@ export interface Nudge {
   read_at: string | null;
 }
 
-export interface Message {
+export type Message = {
   id: string;
   group_id: string;
   session_id: string | null;
@@ -170,7 +171,7 @@ export interface Message {
   // ROADMAP-B: replaced by Matrix rooms for community
 }
 
-export interface Subscription {
+export type Subscription = {
   id: string;
   user_id: string;
   group_id: string | null;
@@ -185,13 +186,13 @@ export interface Subscription {
   raw: Json | null;
 }
 
-export interface ContentWarningAcknowledged {
+export type ContentWarningAcknowledged = {
   user_id: string;
   tier: ContentTier;
   acknowledged_at: string;
 }
 
-export interface AuditLog {
+export type AuditLog = {
   id: string;
   actor_id: string;
   action: string;
@@ -201,14 +202,14 @@ export interface AuditLog {
   created_at: string;
 }
 
-export interface FeatureFlag {
+export type FeatureFlag = {
   key: string;
   value: Json;
   description: string | null;
 }
 
 // ROADMAP-B stub
-export interface CommunityRoom {
+export type CommunityRoom = {
   id: string;
   group_id: string | null;
   matrix_room_id: string | null;
@@ -218,7 +219,7 @@ export interface CommunityRoom {
 }
 
 // ROADMAP-D stub
-export interface ToyConnection {
+export type ToyConnection = {
   id: string;
   user_id: string;
   provider: ToyProvider;
@@ -236,97 +237,132 @@ export type Database = {
         Row: Profile;
         Insert: Partial<Profile> & { id: string };
         Update: Partial<Profile>;
+        Relationships: [];
       };
       groups: {
         Row: Group;
         Insert: Omit<Group, 'id' | 'created_at'>;
         Update: Partial<Group>;
+        Relationships: [];
       };
       group_members: {
         Row: GroupMember;
         Insert: GroupMember;
         Update: Partial<GroupMember>;
+        Relationships: [];
       };
       group_settings: {
         Row: GroupSettings;
         Insert: GroupSettings;
         Update: Partial<GroupSettings>;
+        Relationships: [];
       };
       categories: {
         Row: Category;
         Insert: Omit<Category, 'id'>;
         Update: Partial<Category>;
+        Relationships: [];
       };
       prompts: {
         Row: Prompt;
         Insert: Omit<Prompt, 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Prompt>;
+        Relationships: [];
       };
       prompt_packs: {
         Row: PromptPack;
         Insert: Omit<PromptPack, 'id'>;
         Update: Partial<PromptPack>;
+        Relationships: [];
       };
       prompt_pack_items: {
         Row: PromptPackItem;
         Insert: PromptPackItem;
         Update: Partial<PromptPackItem>;
+        Relationships: [];
       };
       sessions: {
         Row: Session;
         Insert: Omit<Session, 'id'>;
         Update: Partial<Session>;
+        Relationships: [];
       };
       session_cards: {
         Row: SessionCard;
         Insert: Omit<SessionCard, 'id'>;
         Update: Partial<SessionCard>;
+        Relationships: [];
       };
       streaks: {
         Row: Streak;
         Insert: Streak;
         Update: Partial<Streak>;
+        Relationships: [];
       };
       nudges: {
         Row: Nudge;
         Insert: Omit<Nudge, 'id'>;
         Update: Partial<Nudge>;
+        Relationships: [];
       };
       messages: {
         Row: Message;
         Insert: Omit<Message, 'id'>;
         Update: Partial<Message>;
+        Relationships: [];
       };
       subscriptions: {
         Row: Subscription;
         Insert: Omit<Subscription, 'id'>;
         Update: Partial<Subscription>;
+        Relationships: [];
       };
       content_warnings_acknowledged: {
         Row: ContentWarningAcknowledged;
         Insert: ContentWarningAcknowledged;
         Update: Partial<ContentWarningAcknowledged>;
+        Relationships: [];
       };
       audit_log: {
         Row: AuditLog;
         Insert: Omit<AuditLog, 'id'>;
         Update: never;
+        Relationships: [];
       };
       feature_flags: {
         Row: FeatureFlag;
         Insert: FeatureFlag;
         Update: Partial<FeatureFlag>;
+        Relationships: [];
       };
       community_rooms: {
         Row: CommunityRoom;
         Insert: Omit<CommunityRoom, 'id'>;
         Update: Partial<CommunityRoom>;
+        Relationships: [];
       }; // ROADMAP-B
       toy_connections: {
         Row: ToyConnection;
         Insert: Omit<ToyConnection, 'id'>;
         Update: Partial<ToyConnection>;
+        Relationships: [];
       }; // ROADMAP-D
     };
+    Views: {
+      session_cards_revealed: {
+        Row: SessionCard;
+        Relationships: [];
+      };
+      entitlements_view: {
+        Row: {
+          user_id: string;
+          group_id: string;
+          tier_level: number;
+          tier: SubscriptionTier;
+        };
+        Relationships: [];
+      };
+    };
+    Functions: Record<string, never>;
   };
 };
