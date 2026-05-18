@@ -1,26 +1,9 @@
 FROM node:20-alpine
 
-# pnpm
 RUN npm install -g pnpm@9
-
-# Tools used by entrypoint
 RUN apk add --no-cache bash
 
 WORKDIR /workspace
-
-# Copy manifests first so Docker can cache the install layer
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/config/package.json  packages/config/
-COPY packages/db/package.json      packages/db/
-COPY packages/lib/package.json     packages/lib/
-COPY packages/ui/package.json      packages/ui/
-COPY apps/web/package.json         apps/web/
-COPY apps/admin/package.json       apps/admin/
-COPY apps/mobile/package.json      apps/mobile/
-
-# Pre-install into the image — the anonymous volumes in docker-compose.yml
-# will seed from here so pnpm doesn't re-run on every container start.
-RUN pnpm install --frozen-lockfile
 
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
