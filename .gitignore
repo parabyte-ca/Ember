@@ -29,6 +29,9 @@ coverage
 .DS_Store
 Thumbs.db
 
+# pnpm store (created inside workspace when running in Docker)
+.pnpm-store
+
 # Supabase
 supabase/.branches
 supabase/.temp

@@ -267,7 +267,7 @@ services:
       SENTRY_DSN: ${SENTRY_DSN:-}
     volumes:
       - .:/workspace
-      - pnpm-store:/root/.local/share/pnpm/store
+      - pnpm-store:/workspace/.pnpm-store
       - web-next:/workspace/apps/web/.next
     working_dir: /workspace
     command: pnpm --filter @ember/web dev
@@ -289,7 +289,7 @@ services:
       NEXT_PUBLIC_APP_URL: http://localhost:3501
     volumes:
       - .:/workspace
-      - pnpm-store:/root/.local/share/pnpm/store
+      - pnpm-store:/workspace/.pnpm-store
       - admin-next:/workspace/apps/admin/.next
     working_dir: /workspace
     command: pnpm --filter @ember/admin dev
