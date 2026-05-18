@@ -267,7 +267,7 @@ services:
       SENTRY_DSN: ${SENTRY_DSN:-}
     volumes:
       - .:/workspace
-      - web-nm:/workspace/node_modules
+      - pnpm-store:/root/.local/share/pnpm/store
       - web-next:/workspace/apps/web/.next
     working_dir: /workspace
     command: pnpm --filter @ember/web dev
@@ -289,7 +289,7 @@ services:
       NEXT_PUBLIC_APP_URL: http://localhost:3501
     volumes:
       - .:/workspace
-      - admin-nm:/workspace/node_modules
+      - pnpm-store:/root/.local/share/pnpm/store
       - admin-next:/workspace/apps/admin/.next
     working_dir: /workspace
     command: pnpm --filter @ember/admin dev
@@ -297,9 +297,8 @@ services:
 volumes:
   db-data:
   storage-data:
-  web-nm:
+  pnpm-store:   # caches downloaded packages — persists across container restarts
   web-next:
-  admin-nm:
   admin-next:
 
 # ── Mac/Windows Docker Desktop override ───────────────────────────────────────
