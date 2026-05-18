@@ -1,25 +1,28 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-# Ember — local dev setup
+# Ember — Docker dev environment setup
 #
-#   ./scripts/setup.sh           First-time setup (or refresh Supabase keys)
-#   ./scripts/setup.sh --reset   Same, plus wipe + re-seed the database
+#   ./scripts/setup.sh           First-time setup (or restart after changes)
+#   ./scripts/setup.sh --reset   Wipe the database and re-run all migrations
+#   ./scripts/setup.sh --down    Stop and remove all containers
 #   ./scripts/setup.sh --help    Show this message
+#
+# Requirements: Docker with Compose plugin (no Node/pnpm needed on the host)
 # ─────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
-# ── flags ─────────────────────────────────────────────────────────────────────
 DO_RESET=false
+DO_DOWN=false
 for arg in "$@"; do
   case $arg in
     --reset) DO_RESET=true ;;
+    --down)  DO_DOWN=true  ;;
     --help|-h)
       grep '^#' "$0" | grep -v '#!/' | sed 's/^# \{0,1\}//'
       exit 0 ;;
   esac
 done
 
-# ── colours ───────────────────────────────────────────────────────────────────
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
 BLUE='\033[0;34m'; BOLD='\033[1m'; NC='\033[0m'
 
@@ -33,173 +36,73 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 # ── 1. Prerequisites ──────────────────────────────────────────────────────────
-header "1 / 6  Prerequisites"
+header "1 / 4  Prerequisites"
 
-require() {
-  local cmd="$1" install_hint="$2"
-  if ! command -v "$cmd" &>/dev/null; then
-    die "$cmd not found.  $install_hint"
-  fi
-  ok "$cmd  $(${cmd} --version 2>&1 | head -1)"
-}
+command -v docker >/dev/null 2>&1 || die "Docker not found.\nInstall Docker Desktop → https://www.docker.com/products/docker-desktop/"
 
-require node     "Install Node.js 20+ → https://nodejs.org"
-require pnpm     "Run: npm install -g pnpm@9"
-require supabase "Run: npm install -g supabase  (or: brew install supabase/tap/supabase)"
-require docker   "Install Docker Desktop → https://www.docker.com/products/docker-desktop/"
-
-node_major=$(node -e "process.stdout.write(process.versions.node.split('.')[0])")
-[ "$node_major" -ge 20 ] || die "Node.js 20+ required, found $(node --version)"
-
-if ! docker info &>/dev/null; then
-  die "Docker is not running.  Start Docker Desktop and try again."
+if ! docker info >/dev/null 2>&1; then
+  die "Docker daemon is not running.  Start Docker Desktop and try again."
 fi
-ok "Docker daemon is up"
+ok "Docker $(docker --version | awk '{print $3}' | tr -d ',')"
 
-# ── 2. Install dependencies ───────────────────────────────────────────────────
-header "2 / 6  Installing dependencies"
-pnpm install --frozen-lockfile
-ok "pnpm install complete"
+if ! docker compose version >/dev/null 2>&1; then
+  die "'docker compose' plugin not found.\nUpdate Docker Desktop or install the Compose plugin."
+fi
+ok "Docker Compose $(docker compose version --short)"
 
-# ── 3. Start Supabase ─────────────────────────────────────────────────────────
-header "3 / 6  Supabase"
+# ── 2. Environment file ───────────────────────────────────────────────────────
+header "2 / 4  Environment"
 
-if supabase status &>/dev/null 2>&1; then
-  ok "Supabase already running — skipping start"
+if [ ! -f .env ]; then
+  log "Creating .env from .env.example (all local-dev defaults pre-filled)..."
+  cp .env.example .env
+  ok ".env created"
+  warn "The JWT keys in .env are Supabase's public local-dev defaults — safe for"
+  warn "local use but change them before any internet-facing deployment."
 else
-  log "Starting Supabase (first run pulls Docker images; this takes a minute)..."
-  supabase start
+  ok ".env already exists (not overwritten)"
 fi
 
-# Parse credentials out of supabase status
-SUPA_STATUS=$(supabase status 2>&1)
-
-extract() {
-  # Try two common label formats across CLI versions
-  local val
-  val=$(echo "$SUPA_STATUS" | grep -i "$1" | head -1 | sed 's/.*:[[:space:]]*//' | tr -d '[:space:]')
-  echo "$val"
-}
-
-SUPA_URL=$(extract "API URL")
-SUPA_ANON=$(extract "anon key")
-SUPA_SERVICE=$(extract "service_role key")
-
-[ -n "$SUPA_URL" ]     || die "Could not parse API URL from 'supabase status'.\nRun 'supabase status' manually and check the output."
-[ -n "$SUPA_ANON" ]    || die "Could not parse anon key from 'supabase status'."
-[ -n "$SUPA_SERVICE" ] || die "Could not parse service_role key from 'supabase status'."
-
-ok "API URL: $SUPA_URL"
-
-# ── 4. Write .env.local files ─────────────────────────────────────────────────
-header "4 / 6  Environment files"
-
-# Update (or create) a single KEY=VALUE line in a file
-set_env_var() {
-  local file="$1" key="$2" val="$3"
-  if grep -q "^${key}=" "$file" 2>/dev/null; then
-    sed -i "s|^${key}=.*|${key}=${val}|" "$file"
-  else
-    echo "${key}=${val}" >> "$file"
-  fi
-}
-
-write_env() {
-  local dest="$1" app_url="${2:-http://localhost:3000}"
-
-  if [ -f "$dest" ]; then
-    log "Refreshing Supabase keys in $dest"
-    set_env_var "$dest" "NEXT_PUBLIC_SUPABASE_URL"    "$SUPA_URL"
-    set_env_var "$dest" "NEXT_PUBLIC_SUPABASE_ANON_KEY" "$SUPA_ANON"
-    set_env_var "$dest" "SUPABASE_SERVICE_ROLE_KEY"   "$SUPA_SERVICE"
-    set_env_var "$dest" "EXPO_PUBLIC_SUPABASE_URL"    "$SUPA_URL"
-    set_env_var "$dest" "EXPO_PUBLIC_SUPABASE_ANON_KEY" "$SUPA_ANON"
-  else
-    log "Creating $dest"
-    cat > "$dest" <<ENVFILE
-# Generated by scripts/setup.sh — re-run the script to refresh Supabase keys.
-# Everything below OPTIONAL can be left blank; those features just won't work.
-
-# ── Supabase (auto-filled) ────────────────────────────────────────────────────
-NEXT_PUBLIC_SUPABASE_URL=${SUPA_URL}
-NEXT_PUBLIC_SUPABASE_ANON_KEY=${SUPA_ANON}
-SUPABASE_SERVICE_ROLE_KEY=${SUPA_SERVICE}
-
-# Used by mobile / edge functions
-EXPO_PUBLIC_SUPABASE_URL=${SUPA_URL}
-EXPO_PUBLIC_SUPABASE_ANON_KEY=${SUPA_ANON}
-
-# ── App URL ───────────────────────────────────────────────────────────────────
-NEXT_PUBLIC_APP_URL=${app_url}
-EXPO_PUBLIC_APP_URL=${app_url}
-
-# ── OPTIONAL: Stripe (payments) ───────────────────────────────────────────────
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-
-# ── OPTIONAL: other services ──────────────────────────────────────────────────
-ANTHROPIC_API_KEY=       # AI prompt personalisation  → console.anthropic.com
-POSTHOG_KEY=             # Analytics                  → posthog.com
-SENTRY_DSN=              # Error tracking             → sentry.io
-RESEND_API_KEY=          # Transactional email        → resend.com
-REVENUECAT_SECRET=       # Mobile subscriptions       → revenuecat.com
-REVENUECAT_WEBHOOK_AUTH= # RevenueCat webhook secret
-EXPO_ACCESS_TOKEN=       # EAS builds                 → expo.dev
-ENVFILE
-  fi
-
-  ok "$dest"
-}
-
-write_env "apps/web/.env.local"
-write_env "apps/admin/.env.local"
-
-# Mobile gets a leaner file (no server-side keys)
-if [ -f "apps/mobile/.env.local" ]; then
-  log "Refreshing Supabase keys in apps/mobile/.env.local"
-  set_env_var "apps/mobile/.env.local" "EXPO_PUBLIC_SUPABASE_URL"     "$SUPA_URL"
-  set_env_var "apps/mobile/.env.local" "EXPO_PUBLIC_SUPABASE_ANON_KEY" "$SUPA_ANON"
-else
-  log "Creating apps/mobile/.env.local"
-  cat > "apps/mobile/.env.local" <<ENVFILE
-EXPO_PUBLIC_SUPABASE_URL=${SUPA_URL}
-EXPO_PUBLIC_SUPABASE_ANON_KEY=${SUPA_ANON}
-EXPO_PUBLIC_APP_URL=http://localhost:3000
-ENVFILE
+# ── 3. (Optional) database reset ─────────────────────────────────────────────
+if $DO_DOWN; then
+  header "Stopping containers"
+  docker compose down
+  ok "All containers stopped"
+  exit 0
 fi
-ok "apps/mobile/.env.local"
-
-# ── 5. Database ───────────────────────────────────────────────────────────────
-header "5 / 6  Database"
 
 if $DO_RESET; then
-  log "Resetting database (--reset) — all local data will be wiped..."
-  supabase db reset
-  ok "Database wiped, migrations applied, seed loaded"
-else
-  log "Applying pending migrations (skipping seed)..."
-  # migration up applies only unapplied migrations; falls back to db reset on
-  # fresh containers where the migration history table doesn't exist yet.
-  if ! supabase migration up 2>/dev/null; then
-    warn "migration up failed (likely a fresh DB) — running db reset instead"
-    supabase db reset
-  fi
-  ok "Database migrations up to date"
-  echo ""
-  warn "Your existing data was preserved."
-  warn "Run  ./scripts/setup.sh --reset  to wipe and re-seed."
+  header "Resetting database"
+  log "Removing DB volume (all local data will be wiped)..."
+  docker compose down -v db-data 2>/dev/null || true
+  docker compose rm -f migrate   2>/dev/null || true
+  ok "DB volume removed — will be re-created on next start"
 fi
 
-# ── 6. Summary ────────────────────────────────────────────────────────────────
-header "6 / 6  Ready"
+# ── 4. Build + start ──────────────────────────────────────────────────────────
+header "3 / 4  Building images"
+
+log "Building dev image (first run downloads ~500 MB; subsequent runs are fast)..."
+docker compose build --pull web admin
+ok "Images built"
+
+header "4 / 4  Starting services"
+
+log "Starting all services..."
+docker compose up -d
+
+# Wait for web to be reachable
+log "Waiting for web app to accept connections..."
+timeout=120; elapsed=0
+until curl -sf http://localhost:3000 >/dev/null 2>&1; do
+  sleep 2; elapsed=$((elapsed + 2))
+  [ $elapsed -ge $timeout ] && { warn "Timed out waiting for web app — check: docker compose logs web"; break; }
+done
+[ $elapsed -lt $timeout ] && ok "Web app is up"
 
 cat <<SUMMARY
 
-  ${GREEN}${BOLD}Ember is ready.${NC}
-
-  ${BOLD}Start everything:${NC}
-    pnpm dev
+  ${GREEN}${BOLD}Ember is running.${NC}
 
   ${BOLD}URLs:${NC}
     Web app         →  http://localhost:3000
@@ -208,13 +111,19 @@ cat <<SUMMARY
     Inbucket        →  http://localhost:54324   (catch-all email)
 
   ${BOLD}Useful commands:${NC}
-    pnpm test                        run unit tests
-    pnpm lint                        type-check all packages
-    supabase studio                  open DB browser in browser
-    supabase logs                    tail all Supabase service logs
-    ./scripts/setup.sh --reset       wipe + re-seed the database
+    docker compose logs -f web          stream web app logs
+    docker compose logs -f              stream all logs
+    docker compose exec web bash        shell inside the web container
+    docker compose exec web pnpm test   run unit tests
+    docker compose ps                   show service status
+    docker compose down                 stop everything (data preserved)
+    docker compose down -v              stop + wipe all volumes
 
-  ${YELLOW}Optional:${NC} add STRIPE_SECRET_KEY, ANTHROPIC_API_KEY, etc.
-  ${YELLOW}         ${NC} to apps/web/.env.local to enable those features.
+  ${BOLD}Add optional services:${NC}
+    Edit .env and set STRIPE_SECRET_KEY, ANTHROPIC_API_KEY, etc.
+    Then: docker compose up -d --build web
+
+  ${BOLD}Reset the database:${NC}
+    ./scripts/setup.sh --reset
 
 SUMMARY
