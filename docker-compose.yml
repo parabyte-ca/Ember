@@ -10,8 +10,8 @@
 #   (or: docker compose down -v && docker compose up --build)
 #
 # Ports exposed on the host:
-#   3000  — web app (Next.js)
-#   3001  — admin panel (Next.js)
+#   3500  — web app (Next.js)
+#   3501  — admin panel (Next.js)
 #   54321 — Supabase API (Kong gateway)
 #   54322 — Postgres (direct, for psql / GUI clients)
 #   54323 — Supabase Studio (DB browser)
@@ -242,7 +242,7 @@ services:
 
   # ── Web app ───────────────────────────────────────────────────────────────
   # network_mode: host — lets the container reach localhost:54321 (Kong) and
-  # lets the browser reach localhost:3000 (this container).
+  # lets the browser reach localhost:3500 (this container).
   # Works natively on Linux / TrueNAS.
   # Mac/Windows: see the override comment at the bottom of this file.
   web:
@@ -258,7 +258,7 @@ services:
       NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
-      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      NEXT_PUBLIC_APP_URL: http://localhost:3500
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:-}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
@@ -286,7 +286,7 @@ services:
       NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
-      NEXT_PUBLIC_APP_URL: http://localhost:3001
+      NEXT_PUBLIC_APP_URL: http://localhost:3501
     volumes:
       - .:/workspace
       - admin-nm:/workspace/node_modules
@@ -309,8 +309,8 @@ volumes:
 #     web:
 #       network_mode: bridge
 #       extra_hosts: ["localhost:host-gateway"]
-#       ports: ["3000:3000"]
+#       ports: ["3500:3500"]
 #     admin:
 #       network_mode: bridge
 #       extra_hosts: ["localhost:host-gateway"]
-#       ports: ["3001:3001"]
+#       ports: ["3501:3501"]

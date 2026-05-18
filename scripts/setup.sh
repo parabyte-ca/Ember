@@ -94,7 +94,7 @@ docker compose up -d
 # Wait for web to be reachable
 log "Waiting for web app to accept connections..."
 timeout=120; elapsed=0
-until curl -sf http://localhost:3000 >/dev/null 2>&1; do
+until curl -sf http://localhost:3500 >/dev/null 2>&1; do
   sleep 2; elapsed=$((elapsed + 2))
   [ $elapsed -ge $timeout ] && { warn "Timed out waiting for web app — check: docker compose logs web"; break; }
 done
@@ -105,8 +105,8 @@ cat <<SUMMARY
   ${GREEN}${BOLD}Ember is running.${NC}
 
   ${BOLD}URLs:${NC}
-    Web app         →  http://localhost:3000
-    Admin panel     →  http://localhost:3001
+    Web app         →  http://localhost:3500
+    Admin panel     →  http://localhost:3501
     Supabase Studio →  http://localhost:54323   (DB browser)
     Inbucket        →  http://localhost:54324   (catch-all email)
 
