@@ -22,7 +22,7 @@ services:
 
   # ── Database ───────────────────────────────────────────────────────────────
   db:
-    image: supabase/postgres:15.6.1.143
+    image: supabase/postgres:15.8.1.085
     restart: unless-stopped
     ports:
       - "54322:5432"
@@ -45,7 +45,7 @@ services:
 
   # ── Auth (GoTrue) ──────────────────────────────────────────────────────────
   auth:
-    image: supabase/gotrue:v2.164.0
+    image: supabase/gotrue:v2.186.0
     restart: unless-stopped
     depends_on:
       db:
@@ -65,15 +65,18 @@ services:
       GOTRUE_JWT_EXP: ${JWT_EXPIRY}
       GOTRUE_JWT_SECRET: ${JWT_SECRET}
       GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+      GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "false"
       GOTRUE_MAILER_AUTOCONFIRM: "true"        # skip email verification in dev
+      GOTRUE_SMTP_ADMIN_EMAIL: admin@example.com
       GOTRUE_SMTP_HOST: inbucket
       GOTRUE_SMTP_PORT: "2500"
-      GOTRUE_SMTP_ADMIN_EMAIL: admin@example.com
       GOTRUE_SMTP_SENDER_NAME: Ember
+      GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
+      GOTRUE_SMS_AUTOCONFIRM: "false"
 
   # ── REST API (PostgREST) ───────────────────────────────────────────────────
   rest:
-    image: postgrest/postgrest:v12.2.0
+    image: postgrest/postgrest:v14.8
     restart: unless-stopped
     depends_on:
       db:
@@ -89,7 +92,7 @@ services:
 
   # ── Realtime ──────────────────────────────────────────────────────────────
   realtime:
-    image: supabase/realtime:v2.33.27
+    image: supabase/realtime:v2.76.5
     restart: unless-stopped
     depends_on:
       db:
@@ -98,22 +101,25 @@ services:
       PORT: "4000"
       DB_HOST: db
       DB_PORT: "5432"
-      DB_USER: supabase_realtime_admin
+      DB_USER: supabase_admin
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       DB_NAME: postgres
       DB_AFTER_CONNECT_QUERY: "SET search_path TO _realtime"
       DB_ENC_KEY: supabaserealtime
       API_JWT_SECRET: ${JWT_SECRET}
-      FLY_ALLOC_ID: fly123
-      FLY_APP_NAME: realtime
-      SECRET_KEY_BASE: UpNVntn3cDxHJpq99YMc1T1AQgQpc8kfYTuRgBiYa15BLrx8etQoXz3gZv1/u2oq
+      METRICS_JWT_SECRET: ${JWT_SECRET}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      APP_NAME: realtime
+      SEED_SELF_HOST: "true"
+      RUN_JANITOR: "true"
+      DISABLE_HEALTHCHECK_LOGGING: "true"
+      RLIMIT_NOFILE: "10000"
       ERL_AFLAGS: -proto_dist inet_tcp
-      ENABLE_TAILSCALE: "false"
       DNS_NODES: "''"
 
   # ── Storage ───────────────────────────────────────────────────────────────
   storage:
-    image: supabase/storage-api:v1.11.13
+    image: supabase/storage-api:v1.48.26
     restart: unless-stopped
     depends_on:
       db:
@@ -124,8 +130,10 @@ services:
       ANON_KEY: ${ANON_KEY}
       SERVICE_KEY: ${SERVICE_ROLE_KEY}
       POSTGREST_URL: http://rest:3000
-      PGRST_JWT_SECRET: ${JWT_SECRET}
+      AUTH_JWT_SECRET: ${JWT_SECRET}
       DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      STORAGE_PUBLIC_URL: http://localhost:54321/storage/v1
+      REQUEST_ALLOW_X_FORWARDED_PATH: "true"
       FILE_SIZE_LIMIT: "52428800"
       STORAGE_BACKEND: file
       FILE_STORAGE_BACKEND_PATH: /var/lib/storage
@@ -139,7 +147,7 @@ services:
 
   # ── Image proxy (for storage image transforms) ────────────────────────────
   imgproxy:
-    image: darthsim/imgproxy:v3.8.0
+    image: darthsim/imgproxy:v3.30.1
     environment:
       IMGPROXY_BIND: ":5001"
       IMGPROXY_LOCAL_FILESYSTEM_ROOT: /
@@ -150,23 +158,28 @@ services:
 
   # ── API gateway ───────────────────────────────────────────────────────────
   kong:
-    image: kong:2.8.1
+    image: kong/kong:3.9.1
     restart: unless-stopped
     ports:
       - "54321:8000"
     environment:
       KONG_DATABASE: "off"
-      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/kong.yml
       KONG_DNS_ORDER: LAST,A,CNAME
-      KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
+      KONG_DNS_NOT_FOUND_TTL: "1"
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth,request-termination
       KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
       KONG_NGINX_PROXY_PROXY_BUFFERS: "64 160k"
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
     volumes:
-      - ./docker/kong.yml:/home/kong/kong.yml:ro
+      - ./docker/kong.yml:/usr/local/kong/kong.yml:ro
 
   # ── Postgres meta (used by Studio) ────────────────────────────────────────
   meta:
-    image: supabase/postgres-meta:v0.84.2
+    image: supabase/postgres-meta:v0.96.3
     restart: unless-stopped
     depends_on:
       db:
@@ -178,22 +191,32 @@ services:
       PG_META_DB_NAME: postgres
       PG_META_DB_USER: supabase_admin
       PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_META_CRYPTO_KEY: ${PG_META_CRYPTO_KEY}
 
   # ── Supabase Studio (web DB browser) ──────────────────────────────────────
   studio:
-    image: supabase/studio:20240729.083919
+    image: supabase/studio:2026.04.27-sha-5f60601
     restart: unless-stopped
     ports:
       - "54323:3000"
     environment:
+      HOSTNAME: "0.0.0.0"
       STUDIO_PG_META_URL: http://meta:8080
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_META_CRYPTO_KEY: ${PG_META_CRYPTO_KEY}
       DEFAULT_ORGANIZATION_NAME: Ember
       DEFAULT_PROJECT_NAME: ember-local
       SUPABASE_URL: http://kong:8000
       SUPABASE_PUBLIC_URL: http://localhost:54321
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      AUTH_JWT_SECRET: ${JWT_SECRET}
+      NEXT_PUBLIC_ENABLE_LOGS: "false"
+      NEXT_ANALYTICS_BACKEND_PROVIDER: postgres
+      PGRST_DB_SCHEMAS: public,graphql_public
 
   # ── Inbucket (catch-all email) ─────────────────────────────────────────────
   inbucket:
@@ -220,8 +243,8 @@ services:
   # ── Web app ───────────────────────────────────────────────────────────────
   # network_mode: host — lets the container reach localhost:54321 (Kong) and
   # lets the browser reach localhost:3000 (this container).
-  # On TrueNAS / Linux this works natively.
-  # On Docker Desktop (Mac/Windows) change to bridge and add extra_hosts below.
+  # Works natively on Linux / TrueNAS.
+  # Mac/Windows: see the override comment at the bottom of this file.
   web:
     build:
       context: .
@@ -236,7 +259,6 @@ services:
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
       NEXT_PUBLIC_APP_URL: http://localhost:3000
-      # Optional — add to .env to enable
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:-}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
@@ -245,8 +267,8 @@ services:
       SENTRY_DSN: ${SENTRY_DSN:-}
     volumes:
       - .:/workspace
-      - web-nm:/workspace/node_modules         # preserve container's node_modules
-      - web-next:/workspace/apps/web/.next      # preserve Next.js build cache
+      - web-nm:/workspace/node_modules
+      - web-next:/workspace/apps/web/.next
     working_dir: /workspace
     command: pnpm --filter @ember/web dev
 
@@ -267,7 +289,7 @@ services:
       NEXT_PUBLIC_APP_URL: http://localhost:3001
     volumes:
       - .:/workspace
-      - admin-nm:/workspace/node_modules          # shared with web — same image
+      - admin-nm:/workspace/node_modules
       - admin-next:/workspace/apps/admin/.next
     working_dir: /workspace
     command: pnpm --filter @ember/admin dev
@@ -280,20 +302,15 @@ volumes:
   admin-nm:
   admin-next:
 
-# ── Mac/Windows Docker Desktop users ──────────────────────────────────────────
-# Replace the web + admin services above with this override (or create a
-# docker-compose.override.yml):
+# ── Mac/Windows Docker Desktop override ───────────────────────────────────────
+# Create docker-compose.override.yml with:
 #
-#   web:
-#     network_mode: bridge
-#     extra_hosts:
-#       - "localhost:host-gateway"
-#     ports:
-#       - "3000:3000"
-#
-#   admin:
-#     network_mode: bridge
-#     extra_hosts:
-#       - "localhost:host-gateway"
-#     ports:
-#       - "3001:3001"
+#   services:
+#     web:
+#       network_mode: bridge
+#       extra_hosts: ["localhost:host-gateway"]
+#       ports: ["3000:3000"]
+#     admin:
+#       network_mode: bridge
+#       extra_hosts: ["localhost:host-gateway"]
+#       ports: ["3001:3001"]
