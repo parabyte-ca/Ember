@@ -47,12 +47,13 @@ export default function LoginPage() {
           <p className="mt-2 text-muted-foreground">Deepen your connection, one question at a time.</p>
         </div>
         <form onSubmit={handleMagicLink} className="space-y-4">
-          <div>
+          <div suppressHydrationWarning>
             <label htmlFor="email" className="block text-sm font-medium mb-1">Email address</label>
             <input
               id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}
               required placeholder="you@example.com"
               className="w-full rounded-lg border border-input px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              suppressHydrationWarning
             />
           </div>
           {error && (
