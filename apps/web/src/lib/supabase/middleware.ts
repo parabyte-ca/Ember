@@ -27,7 +27,7 @@ export async function updateSession(request: NextRequest) {
   const publicPaths = ['/auth', '/onboarding', '/safety', '/join'];
   const isPublicPath = publicPaths.some((p) => pathname.startsWith(p));
 
-  if (!user && !isPublicPath && pathname !== '/') {
+  if (!user && !isPublicPath) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
